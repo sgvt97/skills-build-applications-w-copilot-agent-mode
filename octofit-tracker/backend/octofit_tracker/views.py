@@ -8,10 +8,14 @@ import logging
 client = MongoClient('mongodb://localhost:27017/')
 db = client['octofit_db']
 
+logger = logging.getLogger(__name__)
+
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
+        logger.debug("Received request for UserViewSet list endpoint")
         users = db.users.find()
         users_list = [{**user, '_id': str(user['_id'])} for user in users]  # Convert ObjectId to string
+        logger.debug("Fetched users from database: %s", users_list)
         logging.info("Fetched users from database: %s", users_list)
         return Response(users_list)
 
