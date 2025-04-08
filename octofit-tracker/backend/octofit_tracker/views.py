@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from pymongo import MongoClient
 from bson import ObjectId
 from django.http import JsonResponse
+import logging
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['octofit_db']
@@ -10,7 +11,9 @@ db = client['octofit_db']
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
         users = db.users.find()
-        return Response(list(users))
+        users_list = [{**user, '_id': str(user['_id'])} for user in users]  # Convert ObjectId to string
+        logging.info("Fetched users from database: %s", users_list)
+        return Response(users_list)
 
     def retrieve(self, request, pk=None):
         user = db.users.find_one({'_id': ObjectId(pk)})
