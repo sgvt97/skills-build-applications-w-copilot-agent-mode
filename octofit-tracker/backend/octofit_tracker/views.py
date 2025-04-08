@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from pymongo import MongoClient
+from django.http import JsonResponse
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client['mydatabase']
@@ -48,3 +49,13 @@ class WorkoutViewSet(viewsets.ViewSet):
     def retrieve(self, request, pk=None):
         workout = db.workouts.find_one({'_id': ObjectId(pk)})
         return Response(workout)
+
+def api_root(request):
+    base_url = 'https://improved-robot-w45v6j9wgxj3g4vq-8000.app.github.dev/'
+    return JsonResponse({
+        'users': base_url + 'users/',
+        'teams': base_url + 'teams/',
+        'activities': base_url + 'activities/',
+        'leaderboard': base_url + 'leaderboard/',
+        'workouts': base_url + 'workouts/'
+    })
