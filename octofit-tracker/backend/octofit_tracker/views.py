@@ -1,9 +1,11 @@
 from rest_framework import viewsets
+from rest_framework.response import Response
 from pymongo import MongoClient
+from bson import ObjectId
 from django.http import JsonResponse
 
 client = MongoClient('mongodb://localhost:27017/')
-db = client['mydatabase']
+db = client['octofit_db']
 
 class UserViewSet(viewsets.ViewSet):
     def list(self, request):
