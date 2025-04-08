@@ -174,8 +174,3 @@ a:hover {
   font-size: 1.8rem;
   margin-bottom: 1rem;
 }
-
-/* Favicon */
-link[rel="icon"] {
-  content: url('/favicon.ico');
-}
